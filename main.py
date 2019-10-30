@@ -1,37 +1,40 @@
-# 2_search_methods_and_ml
+import json
+import search_strategies as ss
 
-For practice:
+with open ('subway_info.json') as js:
+    data = json.load(js)
+    print(data)
 
--`data.py`
+station1 = '通州北关站'
+station2 = '白堆子站'
 
--`search_strategies.py`
+station_info = ss.get_station_info(data)
+line_info = ss.get_line_info(data)
+# print(line_info)
 
--`redo_part1.py`
+distance = ss.get_station_distance(station1,station2,station_info)
+print('{} 到 {} 的距离是 : {} km'.format(station1,station2,round(distance,2)))
 
--`redo_part2.py`
+thereshould = 3
+station_connection = ss.get_station_connection(line_info,station_info,thereshould)
+print(station_connection)
 
--`RE_practice.py` and `test.py` are just for testing
+ss.draw_stations(station_info)
 
+def test_beijing():
+    print('bfs ({},{}):{} '.format(station1,station2, ss.bfs(station1,station2,station_connection)))
+    print('dfs ({},{}):{} '.format(station1, station2, ss.dfs(station1, station2, station_connection)))
+    print('bfs_minimal_transfers({},{}):{} '.format(station1,station2,
+                                                   ss.bfs_strategy(station1,station2,station_connection,ss.sort_by_transfers,station_info)))
+    print('bfs_minimal_distance({},{}):{} '.format(station1, station2,
+                                                   ss.bfs_strategy(station1, station2, station_connection,ss.sort_by_distance, station_info)))
+    print('dfs_minimal_transfers({},{}):{} '.format(station1, station2,
+                                                   ss.dfs_strategy(station1, station2, station_connection,ss.sort_by_transfers, station_info)))
+    print('dfs_minimal_distance({},{}):{} '.format(station1, station2,
+                                                   ss.dfs_strategy(station1, station2, station_connection,ss.sort_by_distance, station_info)))
+    return
 
-
-- 
-
-
-For main:
-
--`get_subway_info.py` : to get the
-
--`search_strategies.py`
--`
-
-'''
-This file mainly works on getting the names of the Beijing subway stations and the coordinates
-of the stations. The names are grabbed from wikipedia of Beijing subway and the coordinates are
-acquired from 高德 amap open platform, where developers can require some infomation for a small amout
-every day. I removed my private key before putting it into github, and keep everything as what it was.
-
-Output: a json file named 'subway_info.json'
-'''
+test_beijing()
 
 '''
 output:

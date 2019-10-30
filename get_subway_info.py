@@ -1,3 +1,12 @@
+'''
+This file mainly works on getting the names of the Beijing subway stations and the coordinates
+of the stations. The names are grabbed from wikipedia of Beijing subway and the coordinates are
+acquired from 高德 amap open platform, where developers can require some infomation for a small amout
+every day. I removed my private key before putting it into github, and keep everything as what it was.
+
+Output: a json file named 'subway_info.json'
+'''
+
 from bs4 import BeautifulSoup
 import requests
 import re
@@ -40,17 +49,16 @@ def get_subway_names(): # 通过wiki 获得地铁站名 ,需要科学上网
 
 
 subway_info = {}
-# for name in ['通州北苑站']:
 for name in get_subway_names():
     # print(name)
     print('获取地铁站坐标中...有点慢，请耐心等待...')
-    subway_info[name] = get_location_from_amap(name,'f08ea0494c3c4e98a8d72eebefadc8cf')[0] # private key
-    subway_info[name + '属于'] = get_location_from_amap(name,'f08ea0494c3c4e98a8d72eebefadc8cf')[1] # private key
+    subway_info[name] = get_location_from_amap(name,'Your private key')[0] # replace your private key
+    subway_info[name + '属于'] = get_location_from_amap(name,'Your private key')[1] # replace your private key
 
 print('获取地铁站坐标已完成！')
 print(subway_info)
 
-with open ('subway_info.json', 'w') as sb:
+with open ('subway_info.json', 'w') as sb: # save as json, so we don't need to access amap again and again
     json.dump(subway_info, sb)
 
 print('北京地铁坐标信息已存储为subway_info.json文件！请查收！')

@@ -3,10 +3,15 @@ import math
 import networkx as nx
 import matplotlib.pyplot as plt
 from collections import defaultdict
-import data
 
-
-
+'''
+The first part shows the functions that used in the lecture, 
+to get the data of the Chinese cities and the searching strategies.
+ I extended the searching strategies to four: bfs, dfs, bfs with strategies 
+ and  dfs with strategies, where searching strategies include sorting 
+ according to the distance  and sorting according to the minimal transfer
+ ------------------------------------------------------------
+ '''
 
 def get_city_info(coordination_data):
     # to get the city names and the corresponding city locations from the original data
@@ -179,7 +184,7 @@ def dfs_strategy(starter, destination, graph, search_strategy,city_info):
             if node in path: continue
             new_path = path + [node]
             pathes = [new_path] + pathes
-        pathes = search_strategy(pathes)
+        pathes = search_strategy(pathes,city_info)
 
         if pathes and pathes[0][-1] == destination:
             return pathes[0]
@@ -195,11 +200,93 @@ def sort_by_distance(pathes,city_info):
     return sorted(pathes, key=get_path_distance)
 
 
-def sort_by_transfers(pathes):
+def sort_by_transfers(pathes,city_info):
     # search strateg according to the minimal transfers
     def get_minimal_transfers(path):
         return len(path)
     return sorted(pathes, key = get_minimal_transfers)
+
+'''
+the second part shows the functions that used in splitting the data of Beijing Subways 
+------------------------------------------------------------
+'''
+
+# the following two functions are to split data and line from the original dataset
+def get_station_info(data):
+    """
+    This function is to get the coordinates of the stations.
+    :param data: A dictionary where keys are the names of the stations and values are either the coordinates or the line name.
+    :return: a dictionary where only contains the station name as the key and the coordinates as the value.
+    """
+    station_info= {}
+    for i,(station, location) in enumerate(zip(list(data.keys()), list(data.values()))):
+        if i % 2 == 0:
+            location = tuple(map(float, location))
+            station_info[station] = location
+    return station_info
+
+def get_line_info(data):
+    """
+    This function is to get which line(lines if it is a connection station) a station belongs to.
+    :param data: A dictionary where keys are the names of the stations and values are either the coordinates or the line name.
+    :return: a dictionary where only contains the station name as the key and the line name as the value.
+    """
+    line_info= {}
+    for i,(station, line) in enumerate(zip(list(data.keys()), list(data.values()))):
+        if i % 2 != 0:
+            station = station[0:-2]
+            line_info[station] = line
+    return line_info
+
+def get_station_distance(station1,station2,station_info):
+    return geo_distance(tuple(map(float,station_info[station1])),tuple(map(float,station_info[station2])))
+
+
+def get_station_connection(line_info,station_info, thereshold):
+    '''
+    This function is to get the connection of the stations.
+    Rules: if two stations are in the same line, then they are connected; if a station is the transfer station of two lines, then the station is connected
+    with all the stations of the two lines.
+    :param line_info: A dictionary where names are the station name and the values are which subway line they belong to
+    :param station_info: A dictionary where names are the station name and the values are the coordinates
+    :param thereshold: not necessory, only use when calculate the connection according to the distance of the stations
+    :return:
+    '''
+    station_connection = defaultdict(list)
+    for station1,line1 in zip(list(line_info.keys()), list(line_info.values())):
+        print(station1,line1)
+        for station2, line2 in zip(list(line_info.keys()), list(line_info.values())):
+            print(station2,line2)
+            if line1 == line2 or line2 in line1 or line1 in line2:
+            # if get_station_distance(station1, station2, station_info) < thereshold:
+                station_connection[station1].append(station2)
+            else: continue
+    return station_connection
+
+def draw_stations(station_info):
+    '''
+    This function draws the stations of beijing subway according to the coordinates
+    :param station_info: dictionary where the keys are the station names and the values are the coordinates
+    :return: a picture of the stations
+    '''
+
+    plt.rcParams['font.sans-serif'] = ['SimHei']# to display Chinese when networkx is used
+    plt.rcParams['axes.unicode_minus'] = False
+
+    graph = nx.Graph()  # to create a node
+    graph.add_nodes_from(list(station_info.keys()))  # to add nodes in the graph
+    # nx.draw(graph, station_info, with_labels=True) # big blue dots
+    plt.figure(1, figsize=(40, 30))
+    nx.draw(graph, station_info, with_labels=True, node_size=2,fontsize=20)
+    font = {'color': 'r',
+            'fontweight': 'bold',
+            'fontsize': 30}
+    # plt.title("北京地铁站坐标图", font)
+    plt.show()
+    return
+
+
+
 
 
 
