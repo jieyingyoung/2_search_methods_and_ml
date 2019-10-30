@@ -2,15 +2,15 @@
 
 #### For practice:
 
-##### -`data.py`
+>##### -`data.py`
 
-##### -`search_strategies.py`
+>##### -`search_strategies.py`
 
-##### -`redo_part1.py`
+>##### -`redo_part1.py`
 
-##### -`redo_part2.py`
+>##### -`redo_part2.py`
 
-##### -`RE_practice.py` 
+>##### -`RE_practice.py` 
 
 
 
@@ -18,35 +18,36 @@
 #### For main:
 
 ##### -`get_subway_info.py` : 
-to get the names of the Beijing subway stations and the coordinates of the stations.
-##### Output: a json file named `subway_info.json`
+>to get the names of the Beijing subway stations and the coordinates of the stations.
+  Output: a json file named `subway_info.json`
 
 ##### -`search_strategies.py` : 
-The first part shows the functions that are used in the lecture, and the second part shows 
+>The first part shows the functions that are used in the lecture, and the second part shows 
 the functions that are used in cleaning the data of Beijing Subways. Searching strategies are extended to four, from 
 the lecture, which are, bfs, dfs, bfs with strategies and  dfs with strategies, where searching strategies include 
 sorting according to the distance and sorting according to the minimal transfer. 
 
 ##### -`main.py` : 
-This file runs the above functions using the data that are produced from `get_subway_info.py` and tests the results of 
+>This file runs the above functions using the data that are produced from `get_subway_info.py` and tests the results of 
 them, and some notes are added.
 
 ##### -`北京地铁站生成坐标图.png` in folder `pics`
 
-##### - `subway_info.json`  which is produced and stores the subway information that is grabbed from the Internet.
+##### - `subway_info.json`  
+>which is produced and stores the subway information that is grabbed from the Internet.
 
 
 
 
 ### The outputs of the main are: 
 
-- bfs (通州北关站,白堆子站): ['通州北关站', '白石桥南站', '白堆子站'] 
+>- bfs (通州北关站,白堆子站): ['通州北关站', '白石桥南站', '白堆子站'] 
 
-- dfs (通州北关站,白堆子站): ['通州北关站', '花园桥站', '金台路站', '善各庄站', '枣营站', '北工大西门站', '将台站', '大望路站', '育知路站', '什刹海站', '霍營站', '上地站', '西直门站', '中关村站', '国家图书馆站', '白堆子站'] 
+>- dfs (通州北关站,白堆子站): ['通州北关站', '花园桥站', '金台路站', '善各庄站', '枣营站', '北工大西门站', '将台站', '大望路站', '育知路站', '什刹海站', '霍營站', '上地站', '西直门站', '中关村站', '国家图书馆站', '白堆子站'] 
 
-- bfs_minimal_transfers(通州北关站,白堆子站): ['通州北关站', '白石桥南站', '白堆子站'] 
+>- bfs_minimal_transfers(通州北关站,白堆子站): ['通州北关站', '白石桥南站', '白堆子站'] 
 
-- *Not be able to wait until it calculating the bfs_minimal_distance, the reason is writing below.
+>- *Not be able to wait until it calculating the bfs_minimal_distance, the reason is writing below.
 
 
 
