@@ -71,8 +71,9 @@ This leads a problem that if a subway line is very long, then the stations at bo
 In the searching result, it may lead us from '通州北关' (the most east end) to ’苹果园' (the most west end)
 and then come back to ‘天安门西'(the middle part). To solve this problem, I could only connect the stations
 with their neighbor stations (for example, only to connect '天安门西' with '天安门东' and ’西单' stations) as well as
-the transfer station that the station can reach. But because of the limitation of time, I did not manage to 
-finish this.
+the transfer station that the station can reach. To have a better idea and manage it, I could learn from 
+`https://github.com/lljieying/Subway_Data/blob/master/%E5%8C%97%E4%BA%AC%E5%9C%B0%E9%93%81/bjsubwaySpider.py`
+in which the author gives a unique number to each station in each subway line. 
 
 4. In all, bfs with the minimal transfers algorithm shows the best results, as well as bfs shows. But there is still
 a long way to go before reaching the Gaode map or Baidu map, in which more efficient and advanced algorithm is used as 
